@@ -1,0 +1,24 @@
+{
+    "Insert Mantine useForm Hook": {
+        "prefix": "mt-useform",
+        "body": [
+            "const form = useForm({",
+            "  initialValues: {",
+            "    email: '',",
+            "    termsOfService: false,",
+            "  },",
+            "",
+            "  validate: {",
+            "    email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),",
+            "  },",
+            "});",
+            "",
+            "",
+            "// Remember to add the form.onSubmit and form.handleSubmit where needed",
+            "// Example: <form onSubmit={form.onSubmit((values) => console.log(values))}>",
+            "// Example: {...form.getInputProps('email')}",
+            "// Example: {...form.getInputProps('termsOfService', { type: 'checkbox' })}",
+        ],
+        "description": "Inserts code for using Mantine's useForm hook in an existing React component."
+    }
+}

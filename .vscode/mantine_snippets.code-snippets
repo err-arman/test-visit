@@ -1,0 +1,93 @@
+{
+	"Mantine component with createStyles": {
+		"scope": "typescriptreact",
+		"prefix": "mc",
+		"body": [
+			"import { createStyles } from '@mantine/core';",
+			"import React from 'react'",
+			"type Props = {}",
+			"",
+			"",
+			"",
+			"const ${1:ComponentName} = (props: Props) => {",
+			  "\tconst { classes } = useStyles();",
+			"",
+			  "\treturn (",
+				"\t\t<div>${1:ComponentName}</div>",
+			  "\t)",
+			"}",
+			"",
+			"",
+			"const useStyles = createStyles((theme, _params, getRef) => {",
+			  "\treturn ({",
+			"",
+			  "\t})",
+			"});",
+			"",
+			"export default ${1:ComponentName}"
+		],
+		"description": "Mantine component"
+	},
+
+	"Mantine drawer": {
+		"scope": "typescriptreact",
+		"prefix": "mdr",
+		"body": [
+			"import { Drawer, createStyles, Text } from '@mantine/core'",
+			"import { useTranslation } from 'next-i18next'",
+			"import React from 'react'",
+			"",
+			"type Props = {",
+				"\tdrawerOpened: boolean,",
+				"\tsetDrawerOpened: (state: boolean) => void",
+			"}",
+			"",
+			"const useStyles = createStyles((theme) => ({",
+				"\t",
+			"}))",
+			"",
+			"const ${1:ComponentName} = ({ drawerOpened, setDrawerOpened }: Props) => {",
+				"\tconst { classes } = useStyles();",
+				"\tconst { t } = useTranslation();",
+			"",
+				"\treturn (",
+					"\t\t<Drawer",
+						"\t\t\topened={drawerOpened}",
+						"\t\t\tonClose={() => setDrawerOpened(false)}",
+						"\t\t\tpadding=\"xl\"",
+						"\t\t\tsize=\"xl\"",
+						"\t\t\tposition=\"right\"",
+						"\t\t\ttitle={<Text size='xl' weight='bold'> ${2:Title}</Text>}",
+					"\t\t>",
+						"\t\t\t<div>${2:Title}</div>",
+					"\t\t</Drawer>",
+				"\t)",
+			"}",
+			"",
+			"export default  ${1:ComponentName}"
+		],
+		"description": "Mantine drawer component"
+	},
+	"Surround with t('')": {
+		"scope": "typescriptreact",
+		"prefix": "trq",
+		"body": "{t(\"$SELECTION\")}"
+	},
+	"Surround with t()": {
+		"scope": "typescriptreact",
+		"prefix": "tr",
+		"body": "{t($SELECTION)}"
+	},
+	"Surround with t() with null safety": {
+		"scope": "typescriptreact",
+		"prefix": "trsafe",
+		"body": "{t($SELECTION) || $SELECTION}"
+	},
+	"Surround with t() for js code": {
+		"scope": "typescriptreact",
+		"prefix": "trj",
+		"body": "t($SELECTION)"
+	}
+}
+
+// https://codepen.io/cbejensen/pen/WXLxaE
