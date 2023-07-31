@@ -52,7 +52,7 @@ const Hospital = ({ token }: Props) => {
                   {/* <Image
                     width={100}
                     height={100}
-                    // src={location.image}
+                    src={location.image}
                     radius={100}
                   /> */}
                   <h1>{hospital?.name}</h1>
@@ -100,7 +100,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const token = ctx.req.cookies?.[cookieName || ""];
   if (!validateToken(token)) {
     return {
-      props: {},
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
     };
   }
 

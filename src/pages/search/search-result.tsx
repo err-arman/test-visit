@@ -1,4 +1,5 @@
 import { GuestHeader } from "@/components/common/GuestHeader";
+import hospitalData from "@/components/demoData";
 import SearchBox from "@/components/search/SearchBox";
 import useUser from "@/hooks/useUser";
 import { Location } from "@/types/Location";
@@ -174,7 +175,7 @@ const SearchPage = ({ token }: Props) => {
                       width={"100px"}
                       height={"100px"}
                       radius={"100%"}
-                      // src={hospitalData[0].image}
+                      src={hospitalData[0].image}
                     />
                   </Group>
 
@@ -269,7 +270,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const token = ctx.req.cookies?.[cookieName || ""];
   if (!validateToken(token)) {
     return {
-      props: {},
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
     };
   }
 

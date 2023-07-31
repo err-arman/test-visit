@@ -19,7 +19,7 @@ const Home = ({ token }: Props) => {
       {/* <h1>Home page</h1>
       <Link href="/auth/login">Login</Link> <br />
       <Link href="/locations/all-locations">All locations</Link> */}
-      {token ? <GetCare /> : ""}
+      <GetCare />
     </div>
   );
 };

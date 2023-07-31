@@ -1,25 +1,27 @@
-import {
-  Paper,
-  createStyles,
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Button,
-  Title,
-  Text,
-  Anchor,
-  rem,
-  Image,
-  Center,
-  Stack,
-  ScrollArea,
-} from "@mantine/core";
 import SiteLogo from "@/assets/images/site-logo.png";
+import {
+  Anchor,
+  Button,
+  Center,
+  Checkbox,
+  Image,
+  Paper,
+  PasswordInput,
+  ScrollArea,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+  createStyles,
+  rem,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import Image from "next/image";
 
 const Signup = () => {
+  const router = useRouter();
   const { classes } = useStyles();
   const form = useForm({
     initialValues: {
@@ -53,8 +55,9 @@ const Signup = () => {
               className={classes.title}
               ta="center"
               mt="md"
-              mb={50}>
-              Provider Signup
+              mb={50}
+            >
+              User Signup
             </Title>
 
             <Stack spacing="md">
@@ -110,17 +113,22 @@ const Signup = () => {
               mt="xl"
               size="md"
               type="submit"
-              variant="secondary">
+              variant="secondary"
+            >
               Signup
             </Button>
 
             <Text ta="center" mt="md">
-              Don&apos;t have an account?{" "}
+              already have an account?{" "}
               <Anchor<"a">
                 href="#"
                 weight={700}
-                onClick={(event) => event.preventDefault()}>
-                Register
+                onClick={(event) => {
+                  event.preventDefault();
+                  router.push("/auth/login");
+                }}
+              >
+                Log In
               </Anchor>
             </Text>
           </form>

@@ -16,7 +16,7 @@ import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useUser from "../../hooks/useUser";
 import api from "../../utils/api";
 import { getFormattedLocalDate } from "../../utils/getFormatedLocalDate";
@@ -25,11 +25,12 @@ type Props = {
   token: string;
 };
 
-const BookingVisits = ({ token }: Props) => {
+const CreateVisit = ({ token }: Props) => {
+  const router = useRouter();
   const { location_id, provider_id } = useRouter().query;
   const ref = useRef<HTMLInputElement>();
   let user = useUser(token);
-
+  const [isLoading, setIsloading] = useState(false);
   const { classes } = useStyles();
   // visit form
   const form = useForm({
@@ -40,25 +41,32 @@ const BookingVisits = ({ token }: Props) => {
       visit_date: "",
       visit_time: "",
       patient_name: user?.name || undefined,
-      patient_email: user?.email || undefined,
+      patient_email: user?.email || "",
       patient_phone: user?.phone || undefined,
       patient_date_of_birth: "",
       patient_sex: "",
       reason_for_visit: "",
     },
+
+    validate: {
+      patient_email: (value) =>
+        /^\S+@\S+$/.test(value) ? null : "Invalid email",
+    },
   });
 
   useEffect(() => {
-    form.setFieldValue("user_id", user?.id);
-    form.setFieldValue("patient_name", user?.name);
-    form.setFieldValue("patient_email", user?.email);
-    form.setFieldValue("patient_phone", user?.phone);
+    if (user?.id) {
+      form.setFieldValue("user_id", user.id);
+      form.setFieldValue("patient_name", user.name);
+      form.setFieldValue("patient_email", user.email);
+      form.setFieldValue("patient_phone", user.phone);
+    }
   }, [user]);
 
   // comfirm visit
   const handleSubmit = (event: any) => {
     event.preventDefault();
-
+    setIsloading(true);
     const formData = {
       ...form.values,
       visit_date: getFormattedLocalDate(new Date(form.values.visit_date)),
@@ -75,6 +83,8 @@ const BookingVisits = ({ token }: Props) => {
             title: res.data.message,
             message: res.data.data.message,
           });
+          router.push("/visits/all-visits");
+          setIsloading(false);
         }
       })
       .catch((err) => console.log("booking - error", err));
@@ -148,8 +158,13 @@ const BookingVisits = ({ token }: Props) => {
               {...form.getInputProps("visit_time")}
               required
             />
-
-            <Button w={"100%"} variant="secondary" type="submit">
+            {/* confirm visit */}
+            <Button
+              w={"100%"}
+              variant="secondary"
+              type="submit"
+              loading={isLoading}
+            >
               Confirm
             </Button>
           </Stack>
@@ -170,7 +185,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const token = ctx.req.cookies?.[cookieName || ""];
   if (!validateToken(token)) {
     return {
-      props: {},
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
     };
   }
 
@@ -182,4 +200,4 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-export default BookingVisits;
+export default CreateVisit;

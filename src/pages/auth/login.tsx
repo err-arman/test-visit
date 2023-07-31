@@ -79,7 +79,7 @@ const Login = () => {
             mt="md"
             mb={50}
           >
-            Provider Login
+            User Login
           </Title>
 
           <Alert

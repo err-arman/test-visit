@@ -24,7 +24,7 @@ export const guestHeaderLinks: GuestHeaderLink[] = [
     },
     {
         "link": "#",
-        "label": "Sign up as user",
+        "label": "Sign up as provider",
         "type": "button",
         "varient": "primary"
     },

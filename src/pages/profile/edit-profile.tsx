@@ -98,7 +98,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const token = ctx.req.cookies?.[cookieName || ""];
   if (!validateToken(token)) {
     return {
-      props: {},
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
     };
   }
 
